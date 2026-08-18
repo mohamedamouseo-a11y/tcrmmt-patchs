@@ -36,12 +36,12 @@ python3 - <<'PY'
 from pathlib import Path
 p = Path('server/_core/index.ts')
 s = p.read_text(encoding='utf-8')
-correct = r"replace(/\\/+$/,'')"
+correct = r"replace(/\/+$/,'')"
 broken = r"replace(//+$/,'')"
 if broken in s:
     raise SystemExit('Source still contains malformed regex: replace(//+$/)')
 if correct not in s:
-    raise SystemExit("Expected corrected source expression replace(/\\\\/+$/,'') was not found; stop rather than patch unknown source")
+    raise SystemExit("Expected corrected source expression replace(/\\/+$/,'') was not found; stop rather than patch unknown source")
 print('source-check: OK')
 PY
 
