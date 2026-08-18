@@ -2,10 +2,11 @@
 set -euo pipefail
 
 LIVE_URL="${1:-https://tcrmmm.tamiyouz.com}"
-TMP_HTML="$(mktemp)"
-TMP_JS="$(mktemp)"
-TMP_API="$(mktemp)"
-trap 'rm -f "$TMP_HTML" "$TMP_JS" "$TMP_API"' EXIT
+TMP_DIR="$(mktemp -d)"
+TMP_HTML="$TMP_DIR/super-admin.html"
+TMP_JS="$TMP_DIR/super-admin-inline.js"
+TMP_API="$TMP_DIR/login-api.json"
+trap 'rm -rf "$TMP_DIR"' EXIT
 
 printf '[VERIFY] Fetching %s/super-admin\n' "$LIVE_URL"
 curl -fsS "$LIVE_URL/super-admin" -o "$TMP_HTML"
