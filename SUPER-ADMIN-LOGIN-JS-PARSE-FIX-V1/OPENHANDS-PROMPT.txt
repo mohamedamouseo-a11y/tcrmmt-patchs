@@ -1,0 +1,32 @@
+Apply the production patch SUPER-ADMIN-LOGIN-JS-PARSE-FIX-V1 to the TCRMMT server.
+
+Target project: /var/www/TCRMMT
+PM2 process: tamiyouz-crm
+Live URL: https://tcrmmm.tamiyouz.com
+Patch repository: https://github.com/mohamedamouseo-a11y/tcrmmt-patchs
+Patch directory: SUPER-ADMIN-LOGIN-JS-PARSE-FIX-V1
+
+Root cause already diagnosed:
+The live /super-admin page contains malformed inline JavaScript `replace(//+$/,'')`, which causes a parse error before the login click listener is registered. The diagnosed source tree already contains the corrected escaped regex, while the built dist/index.js/live HTML is stale or incorrectly generated.
+
+Instructions:
+1. Fetch the patch repository/directory without altering the TCRMMT Git working tree.
+2. Read README.md, APPLY.sh, and VERIFY.sh before execution.
+3. Do NOT run git pull, git reset, git checkout, git clean, or discard any uncommitted TCRMMT changes.
+4. Do NOT modify .env, database, Nginx, credentials, or unrelated files.
+5. Run:
+   bash APPLY.sh /var/www/TCRMMT
+6. If any pre-build, build, syntax, regex, PM2, or live verification check fails, STOP and report the exact failing check. Do not bypass it.
+7. Do not manually edit dist/index.js as the primary fix. The artifact must be produced by the project's existing build from the corrected source.
+8. After success, report:
+   - source precheck result
+   - npm build result
+   - `node --check dist/index.js` result
+   - whether malformed `replace(//+$/,'')` is absent
+   - PM2 reload result
+   - live inline-script syntax result
+   - login API smoke-test HTTP status
+   - final PASS/FAIL
+   - backup/state snapshot path created by APPLY.sh
+
+Do not print passwords, reset tokens, DB/SMTP/JWT secrets, or other credentials.
